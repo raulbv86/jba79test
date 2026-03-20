@@ -163,7 +163,7 @@ textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
   <div class="lock-title">Resp.·. Log.·. "Juan Bautista Arismendi" Nº 79</div>
   <div class="lock-sub">SISTEMA DE ACTAS — OR.·. DE JUAN GRIEGO</div>
   <div class="lock-input-wrap">
-    <input class="lock-input" type="password" id="pwdInput" placeholder="••••••"
+    <input class="lock-input" type="password" id="pwdInput" placeholder="Contraseña"
       onkeydown="if(event.key==='Enter')checkPwd()" oninput="g('pwdInput').classList.remove('error');g('pwdErr').textContent=''">
     <button class="lock-eye" onclick="togglePwdVis()" id="eyeBtn">👁</button>
   </div>
@@ -330,7 +330,7 @@ const LOGO_B64 = "/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAA
 // ── DOCX generation via CDN (docx.js UMD) ──
 // We generate the Word file entirely in the browser using docx.js
 // ── Generador via Google Apps Script ──
-const SCRIPT_URL = https://script.google.com/macros/s/AKfycbymnY8kotHgD0go0DzhkCWHSocKA3-uaAteTciGVbK1D416iEGqzzuwEi2dM6-KJHwm/exec;
+const SCRIPT_URL = 'PEGAR_URL_AQUI';
 
 async function downloadWord() {
   const btn = document.querySelector('.btn-word');
@@ -748,7 +748,7 @@ function simpleHash(s) {
 function checkPwd() {
   const val = document.getElementById('pwdInput').value.trim();
   // Password: JBA79·2026  (the · is the masonic triple dot separator)
-  if(val === 'JBA79·2026' || val === 'JBA792026' || val === 'jba792026') {
+  if(val === 'JBA79' || val === 'jba79' || val === 'Jba79') {
     document.getElementById('lockScreen').style.display = 'none';
     document.getElementById('mainApp').style.display = 'block';
     try { sessionStorage.setItem('jba_auth','1'); } catch(e){}
