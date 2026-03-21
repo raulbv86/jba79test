@@ -56,8 +56,8 @@ html, body {
 .step-dot.active { background: #1D9E75; }
 .step-dot.done { background: #9FE1CB; }
 .step-label { font-size: 12px; color: #B4B2A9; text-align: center; margin-bottom: 1.5rem; font-weight: 600; letter-spacing: 0.05em; }
-.section { display: none; }
-.section.visible { display: block; }
+.section { display: none !important; }
+.section.visible { display: block !important; }
 .section-title { font-size: 14px; font-weight: 600; color: #F1EFE8; margin-bottom: 1rem; padding-bottom: 6px; border-bottom: 1px solid #444441; }
 .field-group { margin-bottom: 1.25rem; }
 label { display: block; font-size: 12px; color: #B4B2A9; margin-bottom: 5px; letter-spacing: 0.04em; }
@@ -446,6 +446,7 @@ function save() {
 
 function load() {
   step = 0;
+  try { sessionStorage.removeItem('jba_step'); } catch(e) {}
   let raw = null;
   try { raw = localStorage.getItem(SK); } catch(e) {}
   if (!raw) { g('fecha').valueAsDate = new Date(); g('saveStatus').textContent = 'Sin borrador guardado'; render(); return; }
@@ -737,13 +738,24 @@ function copyActa() {
 }
 
 function go(n) {
-  step = n; render();
+  step = n;
+  render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function render() {
   initDots();
-  document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('visible', i === step));
+  // Force display on all sections directly - no CSS classes
+  var sections = document.querySelectorAll('.section');
+  for (var idx = 0; idx < sections.length; idx++) {
+    if (idx === step) {
+      sections[idx].style.cssText = 'display:block !important; visibility:visible !important; opacity:1 !important;';
+      sections[idx].classList.add('visible');
+    } else {
+      sections[idx].style.cssText = 'display:none !important;';
+      sections[idx].classList.remove('visible');
+    }
+  }
   if (step === 1) renderCargos();
   if (step === 2) { renderAs(); renderVis(); }
   if (step === 3) {
